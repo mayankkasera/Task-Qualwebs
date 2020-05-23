@@ -15,10 +15,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        FirebaseDatabase.getInstance().reference.child("dnbvdf").setValue("dfjbvhjd")
-            .addOnCanceledListener{
+        goToChat.setOnClickListener {
+            startActivity(Intent(this, ChatActivity::class.java))
+            overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_right
+            )
+        }
 
-            }
 
         goToMenu.setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
