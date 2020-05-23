@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         goToChat.setOnClickListener {
             startActivity(Intent(this, ChatActivity::class.java))
             overridePendingTransition(
-                R.anim.slide_in_right,
-                R.anim.slide_out_right
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
             )
         }
 
