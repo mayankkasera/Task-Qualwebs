@@ -20,8 +20,7 @@ import java.util.*
 
 class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,
                   var reciver: String ,
-                  var sender: String ,
-                  var lastItemCallback :LastItemCallback) : FirebaseRecyclerAdapter<Chat, ChatAdapter.ChatViewholder>(options) {
+                  var sender: String ) : FirebaseRecyclerAdapter<Chat, ChatAdapter.ChatViewholder>(options) {
 
 
     class ChatViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,21 +49,21 @@ class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,
                 holder.grey.setVisibility(View.VISIBLE);
                 holder.blue.setVisibility(View.GONE);
             }
-        }
-
-        if (!model.type.equals("send")) {
-            holder.chat.setBackgroundColor(Color.WHITE);
-            holder.chat.setText(model.message);
-            holder.stime.setText(getDate(model.time!!));
-            holder.slayout.setVisibility(View.GONE);
-            holder.flayout.setVisibility(View.VISIBLE);
-        } else {
             holder.chat.setBackgroundColor(Color.WHITE);
             holder.schat.setText(model.message);
             holder.timestamp.setText(getDate(model.time!!));
             holder.flayout.setVisibility(View.GONE);
             holder.slayout.setVisibility(View.VISIBLE)
         }
+        else{
+            holder.chat.setBackgroundColor(Color.WHITE);
+            holder.chat.setText(model.message);
+            holder.stime.setText(getDate(model.time!!));
+            holder.slayout.setVisibility(View.GONE);
+            holder.flayout.setVisibility(View.VISIBLE);
+        }
+
+
 
         if (model.type.equals("recive") && model.status.equals("unread")) {
             val map: MutableMap<String, Any> = HashMap()
@@ -85,8 +84,6 @@ class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,
 
         }
 
-        if(position!=0)
-        lastItemCallback.callback(position)
 
     }
 

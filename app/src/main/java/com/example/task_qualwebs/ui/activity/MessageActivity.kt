@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.example.task_qualwebs.R
 import com.example.task_qualwebs.adapter.ChatAdapter
-import com.example.task_qualwebs.adapter.LastItemCallback
 import com.example.task_qualwebs.model.Chat
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
@@ -30,36 +29,30 @@ class MessageActivity : AppCompatActivity() {
 
         init()
 
-
-        val options = FirebaseRecyclerOptions.Builder<Chat>()
-            .setQuery(message.child(sender).child(reciver), Chat::class.java)
-            .build()
-
-        adapter = ChatAdapter(options,reciver,sender,object : LastItemCallback {
-            override fun callback(i: Int) {
-
-
-
-            }
-        })
-        recyclerview.adapter = adapter
-
-        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                Log.i("sdcbsdb","${itemCount}")
-                recyclerview.smoothScrollToPosition(adapter.getItemCount())
-            }
-        })
-
+        setUpRecyclerView()
 
         send.setOnClickListener {
             var text = messageEdt.text.toString()
             messageEdt.setText("")
             sendMsg(text)
-
         }
 
 
+    }
+
+    private fun setUpRecyclerView() {
+        val options = FirebaseRecyclerOptions.Builder<Chat>()
+            .setQuery(message.child(sender).child(reciver), Chat::class.java)
+            .build()
+
+        adapter = ChatAdapter(options,reciver,sender)
+        recyclerview.adapter = adapter
+
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                recyclerview.smoothScrollToPosition(adapter.getItemCount())
+            }
+        })
     }
 
     private fun init() {
