@@ -1,8 +1,9 @@
-package com.example.task_qualwebs
+package com.example.task_qualwebs.ui.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.task_qualwebs.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
