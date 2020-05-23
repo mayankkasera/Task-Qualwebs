@@ -18,7 +18,10 @@ import kotlinx.android.synthetic.main.message.view.*
 import java.util.*
 
 
-class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,var reciver: String ,var sender: String , context: Context) : FirebaseRecyclerAdapter<Chat, ChatAdapter.ChatViewholder>(options) {
+class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,
+                  var reciver: String ,
+                  var sender: String ,
+                  var lastItemCallback :LastItemCallback) : FirebaseRecyclerAdapter<Chat, ChatAdapter.ChatViewholder>(options) {
 
 
     class ChatViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -54,11 +57,13 @@ class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,var reciver: String ,va
             holder.chat.setText(model.message);
             holder.stime.setText(getDate(model.time!!));
             holder.slayout.setVisibility(View.GONE);
+            holder.flayout.setVisibility(View.VISIBLE);
         } else {
             holder.chat.setBackgroundColor(Color.WHITE);
             holder.schat.setText(model.message);
             holder.timestamp.setText(getDate(model.time!!));
             holder.flayout.setVisibility(View.GONE);
+            holder.slayout.setVisibility(View.VISIBLE)
         }
 
         if (model.type.equals("recive") && model.status.equals("unread")) {
@@ -79,6 +84,9 @@ class ChatAdapter(options: FirebaseRecyclerOptions<Chat>,var reciver: String ,va
                 }
 
         }
+
+        if(position!=0)
+        lastItemCallback.callback(position)
 
     }
 

@@ -2,16 +2,19 @@ package com.example.task_qualwebs.ui.activity
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.example.task_qualwebs.R
 import com.example.task_qualwebs.adapter.ChatAdapter
+import com.example.task_qualwebs.adapter.LastItemCallback
 import com.example.task_qualwebs.model.Chat
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import kotlinx.android.synthetic.main.activity_message.*
+import javax.security.auth.login.LoginException
 
 
 class MessageActivity : AppCompatActivity() {
@@ -32,11 +35,28 @@ class MessageActivity : AppCompatActivity() {
             .setQuery(message.child(sender).child(reciver), Chat::class.java)
             .build()
 
-        adapter = ChatAdapter(options,reciver,sender,this)
+        adapter = ChatAdapter(options,reciver,sender,object : LastItemCallback {
+            override fun callback(i: Int) {
+
+
+
+            }
+        })
         recyclerview.adapter = adapter
 
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                Log.i("sdcbsdb","${itemCount}")
+                recyclerview.smoothScrollToPosition(adapter.getItemCount())
+            }
+        })
+
+
         send.setOnClickListener {
-            sendMsg()
+            var text = messageEdt.text.toString()
+            messageEdt.setText("")
+            sendMsg(text)
+
         }
 
 
@@ -56,9 +76,11 @@ class MessageActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendMsg() {
+    private fun sendMsg(text: String) {
+
+
         val map: MutableMap<String, Any> = HashMap()
-        map["message"] = messageEdt.text.toString()
+        map["message"] = text
         map["time"] = ServerValue.TIMESTAMP
         map["status"] = "unread"
         map["type"] = "send"
@@ -70,7 +92,7 @@ class MessageActivity : AppCompatActivity() {
         ref.setValue(map)
             .addOnCompleteListener{
                 val map: MutableMap<String, Any> = HashMap()
-                map["message"] = messageEdt.text.toString()
+                map["message"] = text
                 map["time"] = ServerValue.TIMESTAMP
                 map["status"] = "unread"
                 map["sender"] = ref.key.toString()
@@ -79,11 +101,7 @@ class MessageActivity : AppCompatActivity() {
 
                 message.child(reciver).child(sender).push().setValue(map)
                     .addOnCompleteListener {
-                        messageEdt.setText("")
-                        recyclerview.post(Runnable {
-                            // Call smooth scroll
-                            recyclerview.smoothScrollToPosition(adapter.itemCount - 1)
-                        })
+
                     }
             }
 
