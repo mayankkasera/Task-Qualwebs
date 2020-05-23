@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "637066816105",
+    "firebase_url": "https://circular-ally-100512.firebaseio.com",
+    "project_id": "circular-ally-100512",
+    "storage_bucket": "circular-ally-100512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637066816105:android:c7bb4b547ca41b68da50f8",
+        "android_client_info": {
+          "package_name": "com.example.task_qualwebs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637066816105-scgivta9jan45b0nul5i9ln48dlelepd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcqECnebHgbWrNSNo88AmImADP74bT95I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637066816105-scgivta9jan45b0nul5i9ln48dlelepd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

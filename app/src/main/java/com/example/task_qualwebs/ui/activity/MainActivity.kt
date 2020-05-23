@@ -3,7 +3,9 @@ package com.example.task_qualwebs.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.task_qualwebs.R
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -11,6 +13,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        FirebaseDatabase.getInstance().reference.child("dnbvdf").setValue("dfjbvhjd")
+            .addOnCanceledListener{
+
+            }
 
         goToMenu.setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
